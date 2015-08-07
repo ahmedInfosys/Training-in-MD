@@ -27,7 +27,10 @@ public class CourseEnrollment {
 	}
 
 	public void setCourse(String course) {
-		this.course = course;
+		try{this.course = course;}
+		catch(NullPointerException e){
+			System.out.println("Undefined value of course");
+		}
 	}
 
 	public String getGrade() {
@@ -35,14 +38,17 @@ public class CourseEnrollment {
 	}
 
 	public void setGrade(String grade) {
-		this.grade = grade;
+		try{this.grade = grade;}
+		catch(NullPointerException e){
+			System.out.println("Undefined value of grade");
+		}
 	}
 
 	public double getGPA() {
 		return GPA;
 	}
 
-	public void calculate_overall_GPA() {
+	public void calculate_GPA() {
 		
 		switch (grade){
 		case "A":
@@ -66,7 +72,6 @@ public class CourseEnrollment {
 			break;
 				
 		}
-		
 		
 		
 	}

@@ -1,9 +1,9 @@
 
 //Validator
-import java.util.Scanner;  
+import java.util.*;  
 public class Validator {     
 	
-	@Test
+
 	public static String getString(Scanner sc, String prompt, int number_of_characters) {
 		System.out.print(prompt);         
 		String s = "";  
@@ -27,17 +27,17 @@ public class Validator {
 	
 	public static int getInt(Scanner sc, String prompt){         
 		int i = 0;         
-		boolean isValid = false;         
-		while (isValid == false){             
+      
+		try{  
 			System.out.print(prompt);
-			if(sc.hasNextInt()){
-				i = sc.nextInt();
-				isValid = true;
-			}else{                
-				System.out.println("Error! Invalid integer value. Try again.");             
-				}             
-			sc.nextLine();  // discard any other        
-			}        
+			i = sc.nextInt();
+			
+		}catch(NumberFormatException e){
+			System.out.println("Error! .The number should be positive. ");     
+		} catch(InputMismatchException e){
+			System.out.println("Error! .The entered value was a character or string."); 
+		}
+		sc.nextLine();
 		return i; 
 
 	}

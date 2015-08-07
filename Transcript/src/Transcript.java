@@ -14,11 +14,19 @@ public class Transcript {
 	
 	public void addCourse(CourseEnrollment courseenrollment){
 	
-		courseenrollment.calculate_overall_GPA();
+
+		courseenrollment.calculate_GPA();
 		overall_gpa += courseenrollment.getCredit()*courseenrollment.getGPA();
 		overall_credits += courseenrollment.getCredit();
 		String str  = "";
-		str = String.format("%-15s%-20d%-15s%-10f",courseenrollment.getCourse(),courseenrollment.getCredit(), courseenrollment.getGrade(),courseenrollment.getGPA());
+		try{
+			str = String.format("%-15d%-20d%-15d%-10s",courseenrollment.getCourse(),courseenrollment.getCredit(), courseenrollment.getGrade(),courseenrollment.getGPA());
+		}catch(ClassCastException e)
+		{
+			System.out.println("Can't convert from double to string");
+		}catch (NullPointerException e){
+			System.out.println("Empty Array cell");
+		}
 		list.add(str);
 	}
 	
@@ -28,7 +36,15 @@ public class Transcript {
 	}
 
 	public double getOverallGPA(){
-		return overall_gpa/overall_credits;
+		try{
+			overall_gpa /= overall_credits;
+		}catch (ArithmeticException e){
+			System.out.println("Course credits should not contain zero");
+		}catch(NullPointerException e){
+			System.out.println("No value assigned for either overall GPA or overall credits");
+		}
+		return overall_gpa;
+			
 	}
 	
 

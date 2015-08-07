@@ -12,8 +12,9 @@ public class TranscriptApp {
         
 		Scanner sc = new Scanner(System.in);  
 		
-		
-		String select_item;
+		int credits;
+		String course,grade;
+	
 		String choice = "y";    
 		Transcript tran = new Transcript ();
 		//double invoice_Total = 0;
@@ -21,44 +22,39 @@ public class TranscriptApp {
 		NumberFormat currency = NumberFormat.getCurrencyInstance();
 		CourseEnrollment enrollment ;
 		
+		
 		while (choice.equalsIgnoreCase("y")){  
 			
 			
-			// get the input from the user             
-			String course = Validator.getString(sc,"Enter Course: ", 10); 
-			int credits =  Validator.getInt(sc,"Enter credits:     "); 
-			String grade = Validator.getString(sc,"Enter grade: ", 1); 
-			
+			// get the input from the user   
+
+			course = Validator.getString(sc,"Enter Course: ", 10); 
+			credits =  Validator.getInt(sc,"Enter credits:     "); 
+			grade = Validator.getString(sc,"Enter grade: ", 1); 
+				
+		
 			
 			//get the Product object            
 			///enrollmen
+			
 			enrollment =  new CourseEnrollment();
+		
 			
-			enrollment.setCourse(course);
-			enrollment.setCredit(credits);
-			enrollment.setGrade(grade);
-			
-			tran.addCourse(enrollment);
-			
-			
-			
-/*			Bonus:
-			for(int i=0; i < item.get_list().size(); i++){
-				select_item = item.get_list().get(i) ;
+			try{
+				enrollment.setCourse(course);
+				enrollment.setCredit(credits);
+				enrollment.setGrade(grade);
+				tran.addCourse(enrollment);
 				
-				//&& i != item.get_list().size()
-				if(select_item.substring(0,2).contains(productCode) && i != item.get_list().size()){
-					quantity += Integer.parseInt(select_item.substring(42,43));       //index of the quantity in the list
-					//invoice_Total -= Integer.parseInt(select_item
-					item.delete_line_item(i);
-					break Bonus;
-				}
-			}*/
-
-			//invoice_Total += lineItem.getTotal();
+			}catch(NullPointerException e){
+				System.out.println("Undefined variables course, credits,  or grade");
+			}catch(IllegalArgumentException e){
+				System.out.println("adcourse() method only accept arguments of type CourseEnrollment. "); 
+			}
 
 			System.out.println("Another course? (y/n): "); 
 			choice = sc.nextLine();
+
 			
 		}
 		
@@ -69,6 +65,15 @@ public class TranscriptApp {
 		for (String list:tran.getCourses()){
 			System.out.println(list);
 		}
+		
+		String [] Array = tran.getCourses().toArray(new String [tran.getCourses().size()]); 
+		
+		try{
+			System.out.println(Array[1000]);
+		}catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("Can't reach index 1000");
+		}
+		
 		
 		
 		System.out.println("                                  Overall GPA:     " + tran.getFormattedGPA());
